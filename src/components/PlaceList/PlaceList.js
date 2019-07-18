@@ -1,13 +1,17 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, ScrollView } from 'react-native';
 
 import ListItem from '../ListItem/LisItem';
 
-const PlaceList = ({ places }) => {
+const PlaceList = ({ places, onItemPressed, onItemDeleted }) => {
 	const placeOutput = places.map((place, index) => (
-		<ListItem key={index} placeName={place} />
+		<ListItem
+			key={index}
+			placeName={place}
+			onItemPressed={() => onItemDeleted(index)}
+		/>
 	));
-	return <View style={styles.listContainer}>{placeOutput}</View>;
+	return <ScrollView style={styles.listContainer}>{placeOutput}</ScrollView>;
 };
 
 const styles = StyleSheet.create({

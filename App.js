@@ -11,10 +11,16 @@ const App = () => {
     usePlaces(prevState => prevState.concat(placeName));
   };
 
+  const handleDelete = _index => {
+    usePlaces(prevState =>
+      prevState.filter((place, index) => index !== _index)
+    );
+  };
+
   return (
     <View style={styles.container}>
       <PlaceInput onPlaceAdded={handlePlaces} />
-      <PlaceList places={places} />
+      <PlaceList places={places} onItemDeleted={handleDelete} />
     </View>
   );
 };
