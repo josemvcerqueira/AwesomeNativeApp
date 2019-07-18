@@ -3,13 +3,18 @@ import { StyleSheet, View } from 'react-native';
 
 import PlaceInput from './src/components/PlaceInput/PlaceInput';
 import PlaceList from './src/components/PlaceList/PlaceList';
+import placeImage from './src/assets/cloud.png';
 
 const App = () => {
   const [places, usePlaces] = useState([]);
 
   const handlePlaces = placeName => {
     usePlaces(prevState =>
-      prevState.concat({ key: `${Math.random()}`, value: placeName })
+      prevState.concat({
+        key: `${Math.random()}`,
+        name: placeName,
+        image: placeImage,
+      })
     );
   };
 

@@ -6,7 +6,8 @@ import ListItem from '../ListItem/LisItem';
 const PlaceList = ({ places, onItemPressed, onItemDeleted }) => {
 	const handleFlatList = info => (
 		<ListItem
-			placeName={info.item.value}
+			placeName={info.item.name}
+			placeImage={info.item.image}
 			onItemPressed={() => onItemDeleted(info.item.key)}
 		/>
 	);
