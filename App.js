@@ -8,13 +8,13 @@ const App = () => {
   const [places, usePlaces] = useState([]);
 
   const handlePlaces = placeName => {
-    usePlaces(prevState => prevState.concat(placeName));
+    usePlaces(prevState =>
+      prevState.concat({ key: `${Math.random()}`, value: placeName })
+    );
   };
 
-  const handleDelete = _index => {
-    usePlaces(prevState =>
-      prevState.filter((place, index) => index !== _index)
-    );
+  const handleDelete = key => {
+    usePlaces(prevState => prevState.filter(place => place.key !== key));
   };
 
   return (
