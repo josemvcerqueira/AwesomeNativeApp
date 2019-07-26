@@ -1,38 +1,33 @@
-import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import React, { useState } from "react";
+import { StyleSheet, View } from "react-native";
+import { connect } from "react-redux";
 
-import PlaceInput from './src/components/PlaceInput/PlaceInput';
-import PlaceList from './src/components/PlaceList/PlaceList';
-import placeImage from './src/assets/cloud.png';
-import PlaceDetail from './src/components/PlaceDetail/PlaceDetail';
+import PlaceInput from "./src/components/PlaceInput/PlaceInput";
+import PlaceList from "./src/components/PlaceList/PlaceList";
+import placeImage from "./src/assets/cloud.png";
+import PlaceDetail from "./src/components/PlaceDetail/PlaceDetail";
+import {
+  addPlace,
+  deselectPlace,
+  deletePlace,
+  selectPlace
+} from "./src/redux/actions/";
 
-const App = () => {
-  const [places, usePlaces] = useState([]);
-  const [selectedPlace, useSelectedPlace] = useState(null);
+const App = ({
+  places,
+  selectedPlace,
+  onAddPlace,
+  onDeletePlace,
+  onSelectPlace,
+  onDeselectPlace
+}) => {
+  const handlePlaces = placeName => onAddPlace(placeName);
 
-  const handlePlaces = placeName => {
-    usePlaces(prevState =>
-      prevState.concat({
-        key: `${Math.random()}`,
-        name: placeName,
-        image: placeImage,
-      })
-    );
-  };
+  const handleSelected = key => onSelectPlace(key);
 
-  const handleSelected = key => {
-    const place = places.find(_place => _place.key === key);
-    useSelectedPlace(place);
-  };
+  const modalClosedHandler = () => onDeselectPlace();
 
-  const modalClosedHandler = () => useSelectedPlace(null);
-
-  const placeDeleteHandler = () => {
-    usePlaces(prevState =>
-      prevState.filter(place => place.key !== selectedPlace.key)
-    );
-    modalClosedHandler();
-  };
+  const placeDeleteHandler = () => onDeletePlace();
 
   return (
     <View style={styles.container}>
@@ -51,10 +46,25 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 50,
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
+    justifyContent: "flex-start",
+    alignItems: "center",
+    backgroundColor: "#F5FCFF"
+  }
 });
 
-export default App;
+const mapStateToProps = ({ places: { places, selectedPlace } }) => ({
+  places,
+  selectedPlace
+});
+
+const mapDispatchToProps = dispatch => ({
+  onAddPlace: name => dispatch(addPlace(name)),
+  onDeletePlace: () => dispatch(deletePlace()),
+  onSelectPlace: key => dispatch(selectPlace(key)),
+  onDeselectPlace: () => dispatch(deselectPlace())
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);

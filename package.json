@@ -11,6 +11,8 @@
   "dependencies": {
     "react": "16.8.3",
     "react-native": "0.59",
+    "react-redux": "6",
+    "redux": "^4.0.4",
     "styled-components": "^4.3.2"
   },
   "devDependencies": {
@@ -19,6 +21,7 @@
     "babel-jest": "^24.8.0",
     "jest": "^24.8.0",
     "metro-react-native-babel-preset": "^0.55.0",
+    "prettier": "^1.18.2",
     "react-test-renderer": "16.8.3"
   },
   "jest": {
